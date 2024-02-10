@@ -17,7 +17,7 @@ function MonthlyReport({ entries, isLoading }) {
 
     return (
         <div className="container">
-            <h2>Monthly Report</h2>
+            <h2>Calorie Report</h2>
             <div>
                 <select
                     className="select-input"
@@ -60,7 +60,7 @@ function MonthlyReport({ entries, isLoading }) {
                             <td>{entry.category}</td>
                             <td>{entry.calories}</td>
                             <td>{entry.description}</td>
-                            <td>{entry.addedDate}</td>
+                            <td>{entry.addedDate.split("T")[0]}</td>
                         </tr>
                     ))}
                     </tbody>
