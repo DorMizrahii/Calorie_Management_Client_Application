@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import './App.css';
 import MonthlyReport from "./Components/MonthlyReport";
 import AddCaloriesForm from "./components/AddCaloriesForm";
-
 import { fetchEntries } from "./hooks/fetchEntries";
 
 function App() {
@@ -42,7 +41,7 @@ function App() {
           {themeIcon}
         </button>
         <div id="card" className={`app ${theme}`}>
-          <h1 className="card__title">Cost Manager App</h1>
+          <h1 className="card__title">Calorie Management App</h1>
             <AddCaloriesForm setEntries={setEntries}/>
             <MonthlyReport entries={entries} isLoading={isLoading}/>
           </div>

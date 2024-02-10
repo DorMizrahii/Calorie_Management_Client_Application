@@ -1,8 +1,7 @@
 export const fetchEntries = async (setEntries, setIsLoading) => {
   setIsLoading(true);
   try {
-    const database = new CalorieDB();
-    await database.openDB("caloriesdb", 1);
+    const database = await window.idb.openCalorisDB("caloriesdb", 1);
     const fetchedEntries = await database.getAllCalories(database);
     setEntries(fetchedEntries);
   } catch (error) {
