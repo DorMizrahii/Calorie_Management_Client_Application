@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { CalorieDB } from "../idb"; // Ensure this path matches where you've defined CalorieDB
-
 function AddCalorieForm({ setEntries }) {
   const [category, setCategory] = useState("BREAKFAST");
   const [calories, setCalories] = useState("");
@@ -13,9 +11,8 @@ function AddCalorieForm({ setEntries }) {
   useEffect(() => {
     async function initDB() {
       try {
-        const database = new CalorieDB();
-        await database.openDB("caloriesdb", 1);
-        setDb(database);
+          const database = await window.idb.openCalorisDB("caloriesdb", 1); // Use the static method to open the DB
+          setDb(database)
       } catch (error) {
         console.error("Failed to open database", error);
         setError('Failed to initialize database.');
@@ -47,6 +44,7 @@ function AddCalorieForm({ setEntries }) {
         await db.addCalories(entry);
         setEntries((prevEntries) => [...prevEntries, entry]);
         // Reset form fields
+        setCategory("BREAKFAST"); // Reset category to default after submission
         setCalories("");
         setDescription("");
         setIsSubmitting(false);

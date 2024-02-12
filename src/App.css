@@ -57,7 +57,7 @@ h1, h2 {
   color: var(--header-color);
 }
 
-/* Monthly Report table styling */
+/* Report table styling */
 .table {
   border-collapse: collapse;
   width: 100%;
@@ -80,10 +80,6 @@ h1, h2 {
   border-bottom: 2px solid #dee2e6;
 }
 
-/* Zebra striping for rows */
-.table tbody tr:nth-of-type(odd) {
-  background-color: var(--table-row-odd-bg);
-}
 
 .table tbody tr:hover {
   background-color: var(--table-row-hover-bg);
@@ -156,7 +152,7 @@ body[data-theme='dark'] .table tbody tr {
   background-color: var(--container-bg); /* Remove zebra striping in dark mode */
 }
 
-body[data-theme='dark'] .table tbody tr:hover {
+body .table tbody tr:hover {
   background-color: var(--table-row-hover-bg-dark); /* Slightly lighter for hover */
 }
 
@@ -192,4 +188,30 @@ body[data-theme='dark'] textarea:focus {
   background-color: #666;
   border-color: #888;
   color: #fff;
+}
+
+/* Container for the whole component */
+.container {
+  margin-top: 20px;
+}
+
+/* Style for select inputs */
+.select-input {
+  padding: 8px;
+  margin-right: 5px; /* Adjust based on your layout needs */
+  border-radius: 4px;
+}
+
+/* Additional styling for the table to ensure consistency */
+.table {
+  margin-top: 20px;
+  width: 100%; /* Ensures the table stretches to the container width */
+  border-collapse: collapse; /* Optional: for a cleaner look */
+}
+
+
+/* Styles for the table header */
+.table thead tr {
+  background-color: #4CAF50;
+  color: white;
 }

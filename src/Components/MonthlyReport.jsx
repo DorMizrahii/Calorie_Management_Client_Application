@@ -1,31 +1,47 @@
 import React, { useState } from 'react';
 
 function MonthlyReport({ entries, isLoading }) {
-    const [date, setDate] = useState('');
+    const [selectedYear, setSelectedYear] = useState('');
+    const [selectedMonth, setSelectedMonth] = useState('');
 
     const filteredEntries = entries.filter((entry) => {
-        // First, convert addedDate string to a Date object
         const entryDate = new Date(entry.addedDate);
-        const entryYear = entryDate.getFullYear(); // Extract the year
-        const entryMonth = entryDate.getMonth() + 1; // Extract the month (getMonth() returns 0-11)
+        const entryYear = entryDate.getFullYear();
+        const entryMonth = entryDate.getMonth() + 1;
 
-        // Parse the selected date to extract the year and month
-        const [selectedYear, selectedMonth] = date.split('-').map(num => parseInt(num, 10));
+        const numSelectedYear = parseInt(selectedYear, 10);
+        const numSelectedMonth = parseInt(selectedMonth, 10);
 
-        // Compare the year and the month using strict equality
-        return entryYear === selectedYear && entryMonth === selectedMonth;
+        return entryYear === numSelectedYear && entryMonth === numSelectedMonth;
     });
 
     return (
-        <div className="container mt-5">
-            <h2>Monthly Report</h2>
-            <input
-                type="date"
-                id="start"
-                name="trip-start"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-            />
+        <div className="container">
+            <h2>Calorie Report</h2>
+            <div>
+                <select
+                    className="select-input"
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(e.target.value)}
+                >
+                    <option value="">Select Year</option>
+                    {[2019,2020, 2021, 2022, 2023, 2024,2025,2026,2027,2028,2029].map(year => (
+                        <option key={year} value={year}>{year}</option>
+                    ))}
+                </select>
+                <select
+                    className="select-input"
+                    value={selectedMonth}
+                    onChange={(e) => setSelectedMonth(e.target.value)}
+                >
+                    <option value="">Select Month</option>
+                    {Array.from({ length: 12 }, (_, i) => (
+                        <option key={i + 1} value={i + 1}>
+                            {new Date(0, i).toLocaleString('default', { month: 'long' })}
+                        </option>
+                    ))}
+                </select>
+            </div>
             {isLoading ? (
                 <p>Loading...</p>
             ) : filteredEntries.length > 0 ? (
@@ -44,7 +60,7 @@ function MonthlyReport({ entries, isLoading }) {
                             <td>{entry.category}</td>
                             <td>{entry.calories}</td>
                             <td>{entry.description}</td>
-                            <td>{entry.addedDate}</td>
+                            <td>{entry.addedDate.split("T")[0]}</td>
                         </tr>
                     ))}
                     </tbody>
