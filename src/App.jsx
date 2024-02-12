@@ -6,7 +6,7 @@ import AddCaloriesForm from "./components/AddCaloriesForm";
 import { fetchEntries } from "./hooks/fetchEntries";
 
 function App() {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState('light');
   const [costItems, setCostItems] = useState([]);
   const [entries, setEntries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
