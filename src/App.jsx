@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './App.css';
 import MonthlyReport from "./Components/MonthlyReport";
-import AddCaloriesForm from "./components/AddCaloriesForm";
+import AddCaloriesForm from "./Components/AddCaloriesForm"
 import { fetchEntries } from "./hooks/fetchEntries";
 
 function App() {
