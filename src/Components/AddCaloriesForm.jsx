@@ -1,50 +1,64 @@
+/* 
+Developers:
+First name: Tal, Dor, Yamit
+Last name: Lilo, Mizrahi, Segev
+ID:   206361321 , 315429175 , 206776486 
+*/
+
 import React, { useEffect, useState } from "react";
+
+// The AddCalorieForm component allows users to add their calorie intake details.
+// It expects a `setEntries` function prop to update the parent component's state.
 function AddCalorieForm({ setEntries }) {
+  // State variables for the form fields and app status.
   const [category, setCategory] = useState("BREAKFAST");
   const [calories, setCalories] = useState("");
   const [description, setDescription] = useState("");
-  const [db, setDb] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
+  const [db, setDb] = useState(null); // For storing the IndexedDB instance.
+  const [isSubmitting, setIsSubmitting] = useState(false); // Indicates form submission status.
+  const [error, setError] = useState(''); // For displaying any error messages.
 
-  // Initialize the IndexedDB
+  // useEffect hook to initialize the IndexedDB once component mounts.
   useEffect(() => {
     async function initDB() {
       try {
-          const database = await window.idb.openCalorisDB("caloriesdb", 1); // Use the static method to open the DB
-          setDb(database)
+          const dataBase = await window.idb.openCalorisDB("caloriesdb", 1);
+          setDb(dataBase);
       } catch (error) {
-        console.error("Failed to open database", error);
-        setError('Failed to initialize database.');
+        console.error("Failed to open dataBase", error);
+        setError('Failed to initialize dataBase.');
       }
     }
     initDB();
   }, []);
 
+  // Handles the form submission.
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevents the default form submit action.
     setIsSubmitting(true);
     setError('');
 
+    // Validate the calories input.
     if (!calories || calories <= 0) {
       setError('Please enter a valid calorie amount.');
       setIsSubmitting(false);
       return;
     }
 
+    // Proceed if the database is initialized.
     if (db) {
       try {
         const entry = {
           category,
           calories: Number(calories),
           description,
-          addedDate: new Date().toISOString(), // Use ISO string for consistency
+          addedDate: new Date().toISOString(),
         };
 
-        await db.addCalories(entry);
-        setEntries((prevEntries) => [...prevEntries, entry]);
-        // Reset form fields
-        setCategory("BREAKFAST"); // Reset category to default after submission
+        await db.addCalories(entry); // Adds the entry to the IndexedDB.
+        setEntries((prevEntries) => [...prevEntries, entry]); // Updates the parent component's state.
+        // Reset form fields after submission.
+        setCategory("BREAKFAST");
         setCalories("");
         setDescription("");
         setIsSubmitting(false);

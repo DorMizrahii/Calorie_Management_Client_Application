@@ -1,9 +1,17 @@
-class idb {
+/* 
+Developers:
+First name: Tal, Dor, Yamit
+Last name: Lilo, Mizrahi, Segev
+ID:   206361321 , 315429175 , 206776486 
+*/
+
+class Idb {
   constructor() {
-    this.db = null;
+    this.db = null; // Holds the reference to the IndexedDB database.
   }
 
-  // Open or create an IndexedDB database
+  // Static method to ensure a single instance of the database is created or opened.
+  // Utilizes the singleton pattern for IndexedDB access.
   static async openCalorisDB(name, version) {
     if (!window.indexedDB) {
       console.error("Your browser doesn't support IndexedDB.");
@@ -13,6 +21,8 @@ class idb {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open(name, version);
 
+      // This event handles the creation or upgrading of the database.
+      // It creates an object store if it does not already exist.
       request.onupgradeneeded = event => {
         const db = event.target.result;
         if (!db.objectStoreNames.contains("calories")) {
@@ -20,8 +30,9 @@ class idb {
         }
       };
 
+      // On successful database opening, wraps the IDBDatabase in an Idb instance.
       request.onsuccess = event => {
-        const db = new idb();
+        const db = new Idb();
         db.db = event.target.result;
         console.log("Database initialized successfully.");
         resolve(db);
@@ -34,7 +45,7 @@ class idb {
     });
   }
 
-  // Add an entry to the 'calories' store
+  // Adds a new entry to the 'calories' store. Ensures the database has been initialized before adding.
   async addCalories(entry) {
     if (!this.db) {
       console.error("Database has not been initialized.");
@@ -43,10 +54,6 @@ class idb {
 
     return new Promise((resolve, reject) => {
       const transaction = this.db.transaction(["calories"], "readwrite");
-      transaction.onerror = event => {
-        console.error("Transaction error:", event.target.error);
-      };
-
       const store = transaction.objectStore("calories");
       const request = store.add(entry);
 
@@ -61,7 +68,7 @@ class idb {
     });
   }
 
-  // Fetch all entries from the 'calories' store
+  // Fetches all entries from the 'calories' store. Ensures the database is initialized before fetching.
   async getAllCalories() {
     if (!this.db) {
       console.error("Database has not been initialized.");
@@ -84,5 +91,5 @@ class idb {
   }
 }
 
-// Expose idb to other scripts
-window.idb = idb;
+// Make the Idb class globally accessible for easy creation or access to the database.
+window.idb = Idb;
