@@ -12,7 +12,7 @@ class Idb {
 
   // Static method to ensure a single instance of the database is created or opened.
   // Utilizes the singleton pattern for IndexedDB access.
-  static async openCalorisDB(name, version) {
+  static async openCaloriesDB(name, version) {
     if (!window.indexedDB) {
       console.error("Your browser doesn't support IndexedDB.");
       return null;

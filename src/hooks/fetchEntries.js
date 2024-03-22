@@ -9,7 +9,7 @@ ID:   206361321 , 315429175 , 206776486
 export const fetchEntries = async (setEntries, setIsLoading) => {
   setIsLoading(true);
   try {
-    const dataBase = await window.idb.openCalorisDB("caloriesdb", 1); // Open the database.
+    const dataBase = await window.idb.openCaloriesDB("caloriesdb", 1); // Open the database.
     const fetchedEntries = await dataBase.getAllCalories(dataBase); // Retrieve entries.
     setEntries(fetchedEntries); // Update state with fetched entries.
   } catch (error) {

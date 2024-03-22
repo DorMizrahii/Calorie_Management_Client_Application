@@ -6,6 +6,8 @@ ID:   206361321 , 315429175 , 206776486
 */
 
 import React, { useEffect, useState } from "react";
+import {toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 // The AddCalorieForm component allows users to add their calorie intake details.
 // It expects a `setEntries` function prop to update the parent component's state.
@@ -22,7 +24,7 @@ function AddCalorieForm({ setEntries }) {
   useEffect(() => {
     async function initDB() {
       try {
-          const dataBase = await window.idb.openCalorisDB("caloriesdb", 1);
+          const dataBase = await window.idb.openCaloriesDB("caloriesdb", 1);
           setDb(dataBase);
       } catch (error) {
         console.error("Failed to open dataBase", error);
@@ -61,11 +63,13 @@ function AddCalorieForm({ setEntries }) {
         setCategory("BREAKFAST");
         setCalories("");
         setDescription("");
+        toast.success("Entry added successfully!"); // Use toast for success notification
         setIsSubmitting(false);
         console.log("Entry added successfully");
       } catch (error) {
         console.error("Error adding entry", error);
         setError('Failed to add entry.');
+        toast.error("Failed to add entry.") // Use toast for error notification
         setIsSubmitting(false);
       }
     } else {
@@ -77,6 +81,7 @@ function AddCalorieForm({ setEntries }) {
   return (
       <div className="container mt-5">
         <h2>Add Calorie Intake</h2>
+        < ToastContainer /> {/* Toast container that displays the toast */}
         {error && <div className="alert alert-danger" role="alert">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">

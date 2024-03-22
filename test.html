@@ -14,7 +14,7 @@ ID:   206361321 , 315429175 , 206776486  -->
 <script src="./idb.js"></script>
 <script>
     async function test() {
-        const db = await idb.openCalorisDB("caloriesdb",1);
+        const db = await idb.openCaloriesDB("caloriesdb",1);
         const result1 =
             await db.addCalories({calorie:200,category:"LUNCH",
                 Name:"glass of milk"});
